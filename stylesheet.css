@@ -80,7 +80,7 @@ main {
 
 .Upcoming:hover h2,
 .Upcoming:hover li {
-    color: white; /* Switches white text to dark blue when card turns yellow */
+    color: white;
 }
 
 .Upcoming h2,
@@ -89,8 +89,70 @@ main {
     transition: color 0.4s ease;
 }
 
+/* Base Calendar Styles */
+.calendar-container {
+    background-color: white;
+    border: 3px solid rgba(11, 42, 83);
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(11, 42, 83);
+}
+
+.calendar-container h2 {
+    color: rgba(11, 42, 83);
+    text-align: center;
+    font-weight: bold;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day-header {
+    background-color: rgba(11, 42, 83);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.day-box {
+    border: 2px solid rgba(11, 42, 83, 0.25);
+    border-radius: 6px;
+    background-color: #fcfcfc;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.day-box:focus-within,
+.day-box:hover {
+    border-color: rgba(241, 74, 36);
+    box-shadow: 0 0 5px rgba(241, 74, 36, 0.4);
+}
+
+.day-number {
+    font-weight: bold;
+    color: rgba(11, 42, 83);
+}
+
+.event-input {
+    flex: 1;
+    color: #333;
+    outline: none;
+    word-break: break-word;
+    cursor: text;
+}
+
+.event-input:empty::before {
+    content: attr(placeholder);
+    color: #aaa;
+    font-style: italic;
+}
+
+
 /* ==========================================
-   2. PHONE MEDIA QUERY (Up to 767px) asdasdasdasd
+   2. PHONE MEDIA QUERY (Up to 767px)
    ========================================== */
 @media screen and (max-width: 767px) {
 
@@ -156,6 +218,41 @@ main {
     .Upcoming li {
         font-size: 16px;
         line-height: 1.6;
+    }
+
+    /* Phone Calendar Styles */
+    .calendar-container {
+        margin: 20px 5px 15px 5px;
+        padding: 10px;
+    }
+
+    .calendar-container h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .calendar-grid {
+        gap: 3px;
+    }
+
+    .day-header {
+        font-size: 10px;
+        padding: 4px 1px;
+    }
+
+    .day-box {
+        min-height: 55px;
+        padding: 3px;
+    }
+
+    .day-number {
+        font-size: 10px;
+        margin-bottom: 2px;
+    }
+
+    .event-input {
+        font-size: 9px;
+        line-height: 1.1;
     }
 }
 
@@ -232,6 +329,41 @@ main {
         font-size: 18px;
         line-height: 1.7;
     }
+
+    /* Tablet Calendar Styles */
+    .calendar-container {
+        margin: 30px 0 20px 0;
+        padding: 20px;
+    }
+
+    .calendar-container h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .calendar-grid {
+        gap: 6px;
+    }
+
+    .day-header {
+        font-size: 14px;
+        padding: 6px 2px;
+    }
+
+    .day-box {
+        min-height: 75px;
+        padding: 5px;
+    }
+
+    .day-number {
+        font-size: 13px;
+        margin-bottom: 3px;
+    }
+
+    .event-input {
+        font-size: 11px;
+        line-height: 1.2;
+    }
 }
 
 
@@ -305,5 +437,40 @@ main {
     .Upcoming li {
         font-size: 20px;
         line-height: 1.8;
+    }
+
+    /* Desktop Calendar Styles */
+    .calendar-container {
+        margin: 40px 10px 25px 10px;
+        padding: 25px;
+    }
+
+    .calendar-container h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .calendar-grid {
+        gap: 10px;
+    }
+
+    .day-header {
+        font-size: 16px;
+        padding: 10px 4px;
+    }
+
+    .day-box {
+        min-height: 100px;
+        padding: 8px;
+    }
+
+    .day-number {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .event-input {
+        font-size: 13px;
+        line-height: 1.3;
     }
 }
