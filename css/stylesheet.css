@@ -111,6 +111,10 @@ main {
     width: 100%;
 }
 
+a {
+    text-decoration: none;
+}
+
 .day-header {
     background-color: rgb(141, 73, 1);
     color: white;
