@@ -3,9 +3,615 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/stylesheet.css" type="text/css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="images/Discover Kemah Logo.png Kemah Logo.png">
     <title>Discover Kemah Events</title>
+    <style>
+        /* ==========================================
+           1. BASE STYLES (Shared across all screens)
+           ========================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-image: url('images/background1.jpeg'); 
+            background-size: cover;                                 
+            background-position: center;                     
+            background-repeat: no-repeat;                    
+            background-attachment: fixed;                    
+            opacity: 0.9;
+            animation: fadeUp 0.8s ease-in;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        main {
+            border-color: rgb(141, 73, 1);
+            border-style: solid;
+            border-radius: 5px;
+            margin: 10px;
+            background-color: rgba(255, 255, 255, 0.85); /* Added slight background so text stays readable over bg image */
+        }
+
+        .button {
+            display: inline-block;
+            font-weight: bold;
+            color: white;
+            background-color: rgb(141, 73, 1);
+            border: 2px solid rgb(11, 42, 83);
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(11, 42, 83, 0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .button:hover {
+            transform: scale(1.02);
+            background-color: rgb(241, 74, 36);
+            border-color: rgb(141, 73, 1);
+            color: white;
+            filter: drop-shadow(0 0 6px rgba(11, 42, 83, 0.5));
+            box-shadow: 0 0 20px 2px rgb(246, 212, 76);
+        }
+
+        .logo img {
+            height: auto;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .Upcoming {
+            background-color: rgb(141, 73, 1);
+            border-radius: 10px;
+            border: 3px solid rgb(11, 42, 83);
+            box-shadow: 0 0 5px rgba(11, 42, 83, 0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .Upcoming:hover {
+            border-color: rgb(141, 73, 1);
+            filter: drop-shadow(0 0 6px rgba(118, 3, 118, 0.5));
+            background-color: rgb(241, 74, 36);
+            box-shadow: 0 0 20px 2px rgb(246, 212, 76);
+            transform: scale(1.011);
+        }
+
+        .Upcoming:hover h2,
+        .Upcoming:hover li {
+            color: white;
+        }
+
+        .Upcoming h2,
+        .Upcoming li {
+            color: white;
+            transition: color 0.4s ease;
+        }
+
+        /* Base Calendar Styles */
+        .calendar-container {
+            background-color: white;
+            border: 3px solid rgb(11, 42, 83);
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(11, 42, 83, 0.5);
+        }
+
+        .calendar-container h2 {
+            color: rgb(11, 42, 83);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            width: 100%;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .day-header {
+            background-color: rgb(141, 73, 1);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .day-box {
+            border: 1px solid rgba(11, 42, 83, 0.25);
+            border-radius: 6px;
+            background-color: #fcfcfc;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+            cursor: pointer;
+        }
+
+        .day-box:hover {
+            border-color: rgb(11, 42, 83);
+            box-shadow: 0 0 5px rgba(241, 74, 36, 0.4);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .empty-box {
+            background-color: #f0f0f0;
+            opacity: 0.6;
+        }
+
+        .day-number {
+            font-weight: bold;
+            color: rgb(11, 42, 83);
+        }
+
+        .event-item {
+            background-color: rgb(204, 80, 0);
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 3px;
+            word-break: break-word;
+        }
+
+        /* Base Feature Card Styles */
+        .section-title {
+            text-align: center;
+            color: rgb(11, 42, 83);
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .feature-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 10px;
+        }
+
+        .card {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            aspect-ratio: 1 / 1;
+            text-decoration: none;
+            border: 3px solid rgb(11, 42, 83);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .card-image-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card-title {
+            position: relative;
+            z-index: 2;
+            background-color: #ffffff;
+            color: rgb(11, 42, 83);
+            font-weight: 800;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 1px;
+            width: 80%;
+            margin-bottom: 12%;
+            padding: 10px 15px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* Card & Title Hover Animations */
+        .card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 0 20px 2px rgb(246, 212, 76);
+            border-color: rgb(241, 74, 36);
+        }
+
+        .card:hover .card-image-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .card:hover .card-title {
+            background-color: rgb(241, 74, 36);
+            color: #ffffff;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* ==========================================
+           2. PHONE MEDIA QUERY (Up to 767px)
+           ========================================== */
+        @media screen and (max-width: 767px) {
+            main {
+                padding: 10px 5px;
+                border-width: 3px;
+            }
+
+            .top {
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: center;
+                gap: 1.2rem;
+            }
+
+            .logo img {
+                width: 100%;
+                max-width: 240px;
+                margin-top: 10px;
+            }
+
+            .text {
+                width: 100%;
+                text-align: center;
+                padding: 5px 0;
+            }
+
+            .text h1 {
+                color: rgb(11, 42, 83);
+                font-size: 24px;
+            }
+
+            .text p {
+                font-size: 14px;
+                font-style: oblique;
+                line-height: 1.4;
+                margin-top: 10px;
+            }
+
+            .button {
+                padding: 8px 20px;
+                font-size: 16px;
+                margin-top: 15px;
+                margin-right: 4px;
+                margin-left: 4px;
+            }
+
+            .feature-cards {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                margin: 20px 5px;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .card-title {
+                font-size: 14px;
+                padding: 8px 10px;
+            }
+
+            .Upcoming {
+                margin: 20px 2px 15px 2px;
+                padding: 12px;
+            }
+
+            .Upcoming h2 {
+                font-size: 18px;
+                padding-left: 0;
+                margin-bottom: 8px;
+            }
+
+            .Upcoming ul {
+                padding-left: 18px;
+            }
+
+            .Upcoming li {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .calendar-container {
+                margin: 15px 2px 10px 2px;
+                padding: 12px 6px;
+            }
+
+            .calendar-container h2 {
+                font-size: 18px;
+                margin-bottom: 8px;
+            }
+
+            .calendar-grid {
+                gap: 3px;
+            }
+
+            .day-header {
+                font-size: 10px;
+                padding: 4px 1px;
+            }
+
+            .day-box {
+                min-height: 65px;
+                padding: 4px 3px;
+            }
+
+            .day-number {
+                font-size: 10px;
+                margin-bottom: 2px;
+            }
+
+            .event-item {
+                font-size: 8.5px;
+                line-height: 1.1;
+                padding: 2px 3px;
+                margin-top: 2px;
+            }
+        }
+
+
+        /* ==========================================
+           3. TABLET MEDIA QUERY (768px to 1023px)
+           ========================================== */
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+            main {
+                padding: 20px;
+                border-width: 4px;
+                max-width: 95%;
+                margin: 15px auto;
+            }
+
+            .top {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 2rem;
+            }
+
+            .text {
+                flex: 1 1 60%;
+                text-align: left;
+            }
+
+            .text h1 {
+                color: rgb(11, 42, 83);
+                font-size: 34px;
+            }
+
+            .text p {
+                font-size: 16px;
+                font-style: oblique;
+                line-height: 1.5;
+                margin-top: 10px;
+            }
+
+            .button {
+                padding: 10px 30px;
+                font-size: 20px;
+                margin-top: 20px;
+                margin-right: 10px;
+            }
+
+            .logo {
+                flex: 1 1 40%;
+            }
+
+            .logo img {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .feature-cards {
+                gap: 15px;
+                margin: 25px 0;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .Upcoming {
+                margin-top: 30px;
+                margin-bottom: 20px;
+                padding: 20px;
+            }
+
+            .Upcoming h2 {
+                font-size: 22px;
+                padding-left: 5px;
+            }
+
+            .Upcoming ul {
+                padding-left: 25px;
+            }
+
+            .Upcoming li {
+                font-size: 17px;
+                line-height: 1.6;
+            }
+
+            .calendar-container {
+                margin: 25px 0 20px 0;
+                padding: 20px 15px;
+            }
+
+            .calendar-container h2 {
+                font-size: 22px;
+                margin-bottom: 12px;
+            }
+
+            .calendar-grid {
+                gap: 6px;
+            }
+
+            .day-header {
+                font-size: 13px;
+                padding: 6px 2px;
+            }
+
+            .day-box {
+                min-height: 95px;
+                padding: 6px 8px;
+            }
+
+            .day-number {
+                font-size: 13px;
+                margin-bottom: 3px;
+            }
+
+            .event-item {
+                font-size: 10.5px;
+                line-height: 1.2;
+                padding: 3px 5px;
+                margin-top: 3px;
+            }
+        }
+
+
+        /* ==========================================
+           4. BIG DESKTOP MEDIA QUERY (1024px and up)
+           ========================================== */
+        @media screen and (min-width: 1024px) {
+            main {
+                padding: 20px 30px;
+                border-width: 5px;
+                max-width: 1400px;
+                margin: 20px auto;
+            }
+
+            .top {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 4rem;
+                max-width: 1500px;
+            }
+
+            .text {
+                flex: 1 1 50%;
+                text-align: center;
+                max-width: 650px;
+                padding: 10px 0;
+            }
+
+            .text h1 {
+                color: rgb(11, 42, 83);
+                font-size: 48px;
+            }
+
+            .text p {
+                font-size: 20px;
+                font-style: oblique;
+                line-height: 1.5;
+            }
+
+            .button {
+                padding: 10px 45px;
+                font-size: 26px;
+                margin-top: 35px;
+                margin-right: 20px;
+            }
+
+            .logo img {
+                width: 100%;
+                max-width: 500px;
+                margin-top: 20px;
+            }
+
+            .feature-cards {
+                gap: 25px;
+                margin: 35px 10px;
+            }
+
+            .card-title {
+                font-size: 20px;
+            }
+
+            .Upcoming {
+                margin: 45px 10px 25px 10px;
+                padding: 15px 25px;
+            }
+
+            .Upcoming h2 {
+                font-size: 25px;
+                padding-left: 10px;
+                margin-top: 5px;
+            }
+
+            .Upcoming ul {
+                padding-left: 30px;
+            }
+
+            .Upcoming li {
+                font-size: 19px;
+                line-height: 1.8;
+            }
+
+            .calendar-container {
+                margin: 35px 10px 25px 10px;
+                padding: 25px 20px;
+            }
+
+            .calendar-container h2 {
+                font-size: 26px;
+                margin-bottom: 18px;
+            }
+
+            .calendar-grid {
+                gap: 10px;
+            }
+
+            .day-header {
+                font-size: 15px;
+                padding: 8px 4px;
+            }
+
+            .day-box {
+                min-height: 135px;
+                padding: 8px 10px;
+            }
+
+            .day-number {
+                font-size: 15px;
+                margin-bottom: 4px;
+            }
+
+            .event-item {
+                font-size: 12px;
+                line-height: 1.3;
+                padding: 4px 6px;
+                margin-top: 4px;
+            }
+        }
+    </style>
 </head>
 <body>
     <main>
@@ -32,9 +638,9 @@
             <div class="Upcoming">
             <h2>Upcoming Events!</h2>
                 <ul>    
-                    <li>National Night Out - October 6th</li>
-                    <li>Art Walk - October 10th</li>
-                    <li>Trunk or Treat - October 29th</li>
+                    <li>Salute to Military and First Responders - Boardwalk November 7th and 8th</li>
+                    <li>International Sweet Wine Fest - Boardwalk November 14th</li>
+                    <li>Kemah Lighting of the Christmas Tree - December 3th</li>
                 </ul>
             </div>
         </div>
@@ -51,174 +657,140 @@
                 <div class="day-header">Fri</div>
                 <div class="day-header">Sat</div>
 
-                <!-- Previous Month Days (September padding) -->
-                <div class="day-box empty-box"><span class="day-number">27</span></div>
-                <div class="day-box empty-box"><span class="day-number">28</span></div>
-                <div class="day-box empty-box"><span class="day-number">29</span></div>
-                <div class="day-box empty-box"><span class="day-number">30</span></div>
-
-                <!-- October Days -->
+                <!-- November days -->
                 <div class="day-box"><span class="day-number">1</span></div>
-                <div class="day-box">
-                    <span class="day-number">2</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Fright Night Movies - Boardwalk</div>
-                    </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Kemah Twilight Market</div>
-                    </a>
-                </div>
-                <div class="day-box">
-                    <span class="day-number">3</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">OctoberFest - Boardwalk</div>
-                    </a>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Halloween Costume Contest - Boardwalk</div>
-                    </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Inspired Abilities Market</div>
-                    </a>     
-                </div>
+                <div class="day-box"><span class="day-number">2</span></div>
+                <div class="day-box"><span class="day-number">3</span></div>
                 <div class="day-box">
                     <span class="day-number">4</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">OctoberFest - Boardwalk</div>
-                    </a>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Freaky Food Eating Contests - Boardwalk</div>
-                    </a>    
+                    <a href="https://www.kemahboardwalk.com/choir-days" target="_blank">
+                        <div class="event-item">Choir Days - Boardwalk</div>
+                    </a>  
                 </div>
-                <div class="day-box"><span class="day-number">5</span></div>
+                <div class="day-box">
+                    <span class="day-number">5</span>
+                    <a href="https://www.kemahboardwalk.com/choir-days" target="_blank">
+                        <div class="event-item">Choir Days - Boardwalk</div>
+                    </a>   
+                </div>
                 <div class="day-box">
                     <span class="day-number">6</span>
-                    <a href="https://www.kemahtx.gov/DocumentCenter/View/5266/2026-NNO-Flyer" target="_blank">
-                        <div class="event-item">National Night Out</div>
+                    <a href="https://www.ktxevents.com/product/11-20-2026-kemah-twilight-market/" target="_blank">
+                        <div class="event-item">Kemah Twilight Market</div>
                     </a>
                 </div>
                 <div class="day-box">
                     <span class="day-number">7</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Homeschool Day - Boardwalk</div>
-                    </a>
-                </div>
-                <div class="day-box"><span class="day-number">8</span></div>
-                <div class="day-box">
-                    <span class="day-number">9</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Fright Night Movies - Boardwalk</div>
-                    </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Kemah Twilight Market</div>
+                    <a href="https://www.kemahboardwalk.com/choir-days" target="_blank">
+                        <div class="event-item">Salute to Military and First Responders - Boardwalk</div>
                     </a>
                 </div>
                 <div class="day-box">
-                    <span class="day-number">10</span>
-                    <a href="https://app.seemylegacy.com/community/2818/campaign/10428" target="_blank">
-                        <div class="event-item">ArtWalk</div>
+                    <span class="day-number">8</span>
+                    <a href="https://www.kemahboardwalk.com/choir-days" target="_blank">
+                        <div class="event-item">Salute to Military and First Responders - Boardwalk</div>
                     </a>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Halloween Costume Contest - Boardwalk</div>
+                    <a href="https://www.ktxevents.com/product/11-8-2026-kemah-mimosa-market/" target="_blank">
+                        <div class="event-item">Kemah Sunday Funday Market</div>
                     </a>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Witches Night Out! - Boardwalk</div>
-                    </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Kemah Harvest & Handmade Market</div>
-                    </a>  
                 </div>
+                <div class="day-box"><span class="day-number">9</span></div>
+                <div class="day-box"><span class="day-number">10</span></div>
                 <div class="day-box">
                     <span class="day-number">11</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Freaky Food Eating Contests - Boardwalk</div>
+                    <a href="https://www.kemahboardwalk.com/veterans-day" target="_blank">
+                        <div class="event-item">Veterans Day</div>
                     </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Kemah Sunday Funday Market</div>
-                    </a> 
                 </div>
                 <div class="day-box"><span class="day-number">12</span></div>
-                <div class="day-box"><span class="day-number">13</span></div>
-                <div class="day-box"><span class="day-number">14</span></div>
-                <div class="day-box"><span class="day-number">15</span></div>
                 <div class="day-box">
-                    <span class="day-number">16</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Fright Night Movies - Boardwalk</div>
-                    </a>
-                    <a href="" target="_blank">
+                    <span class="day-number">13</span>
+                    <a href="https://www.ktxevents.com/product/11-20-2026-kemah-twilight-market/" target="_blank">
                         <div class="event-item">Kemah Twilight Market</div>
                     </a>
                 </div>
                 <div class="day-box">
-                    <span class="day-number">17</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Halloween Costume Contest - Boardwalk</div>
+                    <span class="day-number">14</span>
+                    <a href="https://www.kemahboardwalk.com/international-sweet-wine-fest" target="_blank">
+                        <div class="event-item">International Sweet Wine Fest - Boardwalk</div>
                     </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Kemah Lighthouse Market</div>
-                    </a> 
-                </div>
-                <div class="day-box">
-                    <span class="day-number">18</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Freaky Food Eating Contests - Boardwalk</div>
+                    <a href="https://www.kemahboardwalk.com/kickin-it-country-weekend" target="_blank">
+                        <div class="event-item">Country Weekend - Boardwalk</div>
                     </a>
-                </div>
-                <div class="day-box"><span class="day-number">19</span></div>
-                <div class="day-box"><span class="day-number">20</span></div>
-                <div class="day-box"><span class="day-number">21</span></div>
-                <div class="day-box"><span class="day-number">22</span></div>
-                <div class="day-box">
-                    <span class="day-number">23</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Fright Night Movies - Boardwalk</div>
-                    </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Kemah Twilight Market</div>
-                    </a>
-                </div>
-                <div class="day-box">
-                    <span class="day-number">24</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Halloween Costume Contest - Boardwalk</div>
-                    </a>
-                    <a href="" target="_blank">
+                    <a href="https://www.ktxevents.com/product/11-4-2026-harvest-handmade-makers-market/" target="_blank">
                         <div class="event-item">Kemah Harvest & Handmade Market</div>
-                    </a> 
+                    </a>
                 </div>
                 <div class="day-box">
-                    <span class="day-number">25</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Freaky Food Eating Contests - Boardwalk</div>
+                    <span class="day-number">15</span>
+                    <a href="https://www.kemahboardwalk.com/kickin-it-country-weekend" target="_blank">
+                        <div class="event-item">Country Weekend - Boardwalk</div>
                     </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Barktoberfest Kemah</div>
-                    </a> 
                 </div>
-                <div class="day-box"><span class="day-number">26</span></div>
-                <div class="day-box"><span class="day-number">27</span></div>
-                <div class="day-box"><span class="day-number">28</span></div>
+                <div class="day-box"><span class="day-number">16</span></div>
+                <div class="day-box"><span class="day-number">17</span></div>
+                <div class="day-box"><span class="day-number">18</span></div>
+                <div class="day-box"><span class="day-number">19</span></div>
+                <div class="day-box">
+                    <span class="day-number">20</span>
+                    <a href="https://www.ktxevents.com/product/11-20-2026-kemah-twilight-market/" target="_blank">
+                        <div class="event-item">Kemah Twilight Market</div>
+                    </a>
+                </div>
+                <div class="day-box">
+                    <span class="day-number">21</span>
+                    <a href="https://www.kemahboardwalk.com/tejano-music-super-fest" target="_blank">
+                        <div class="event-item">Tejano Music Super Fest - Boardwalk</div>
+                    </a>
+                    <a href="https://www.ktxevents.com/product/11-21-2026-kemah-lighthouse-market/" target="_blank">
+                        <div class="event-item">Kemah Lighthouse Market</div>
+                    </a>
+                </div>
+                <div class="day-box">
+                    <span class="day-number">22</span>
+                    <a href="https://www.kemahboardwalk.com/tejano-music-super-fest" target="_blank">
+                        <div class="event-item">Tejano Music Super Fest - Boardwalk</div>
+                    </a>
+                </div>
+                <div class="day-box"><span class="day-number">23</span></div>
+                <div class="day-box"><span class="day-number">24</span></div>
+                <div class="day-box"><span class="day-number">25</span></div>
+                <div class="day-box">
+                    <span class="day-number">26</span>
+                    <a href="https://www.kemahboardwalk.com/thanksgiving-pass" target="_blank">
+                        <div class="event-item">Thanskgiving Day</div>
+                    </a>
+                    <a href="https://www.kemahboardwalk.com/thanksgiving-pass" target="_blank">
+                        <div class="event-item">Thanksgiving Weekend - Boardwalk</div>
+                    </a>
+                </div>
+                <div class="day-box">
+                    <span class="day-number">27</span>
+                    <a href="" target="_blank">
+                        <div class="event-item">Black Friday</div>
+                    </a>
+                    <a href="https://www.kemahboardwalk.com/thanksgiving-pass" target="_blank">
+                        <div class="event-item">Thanksgiving Weekend - Boardwalk</div>
+                    </a>
+                </div>
+                <div class="day-box">
+                    <span class="day-number">28</span>
+                    <a href="https://www.kemahboardwalk.com/thanksgiving-pass" target="_blank">
+                        <div class="event-item">Thanksgiving Weekend - Boardwalk</div>
+                    </a>
+                </div>
                 <div class="day-box">
                     <span class="day-number">29</span>
-                    <a href="https://kemahtx.gov/915/Trunk-or-Treat-Shop-Eat" target="_blank">
-                        <div class="event-item">Trunk or Treat</div>
+                    <a href="https://www.kemahboardwalk.com/thanksgiving-pass" target="_blank">
+                        <div class="event-item">Thanksgiving Weekend - Boardwalk</div>
                     </a>
                 </div>
-                <div class="day-box">
-                    <span class="day-number">30</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Fright Night Movies - Boardwalk</div>
-                    </a>
-                    <a href="" target="_blank">
-                        <div class="event-item">Kemah Twilight Market</div>
-                    </a>
-                </div>
-                <div class="day-box">
-                    <span class="day-number">31</span>
-                    <a href="https://www.kemahboardwalk.com/events" target="_blank">
-                        <div class="event-item">Halloween Costume Contest - Boardwalk</div>
-                    </a>
-                </div>
+                <div class="day-box"><span class="day-number">30</span></div>
+                <div class="day-box empty-box"><span class="day-number">1</span></div>
+                <div class="day-box empty-box"><span class="day-number">2</span></div>
+                <div class="day-box empty-box"><span class="day-number">3</span></div>
+                <div class="day-box empty-box"><span class="day-number">4</span></div>
+                <div class="day-box empty-box"><span class="day-number">5</span></div>
             </div>
         </div>
 
