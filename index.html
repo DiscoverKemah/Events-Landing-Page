@@ -46,6 +46,22 @@
             background-color: rgba(255, 255, 255, 0.85);
         }
 
+        .paragraph {
+            padding-top: 20px;
+        }
+
+        /* Ensure all anchors, link states, and event items have zero underlines */
+        a, 
+        a:visited, 
+        a:hover, 
+        a:active,
+        .calendar-container a,
+        .event-item {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            outline: none;
+        }
+
         .button {
             display: inline-block;
             font-weight: bold;
@@ -53,7 +69,6 @@
             background-color: rgb(141, 73, 1);
             border: 2px solid rgb(11, 42, 83);
             border-radius: 8px;
-            text-decoration: none;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(11, 42, 83, 0.5);
             transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease, color 0.4s ease;
@@ -69,7 +84,6 @@
         }
 
         .Upcoming {
-            background-color: rgb(141, 73, 1);
             border-radius: 10px;
             border: 3px solid rgb(11, 42, 83);
             box-shadow: 0 0 5px rgba(11, 42, 83, 0.5);
@@ -79,19 +93,19 @@
         .Upcoming:hover {
             border-color: rgb(141, 73, 1);
             filter: drop-shadow(0 0 6px rgba(118, 3, 118, 0.5));
-            background-color: rgb(241, 74, 36);
+            background-color: rgb(238, 207, 116);
             box-shadow: 0 0 20px 2px rgb(246, 212, 76);
             transform: scale(1.011);
         }
 
         .Upcoming:hover h2,
         .Upcoming:hover li {
-            color: white;
+            color: black;
         }
 
         .Upcoming h2,
         .Upcoming li {
-            color: white;
+            color: black;
             transition: color 0.4s ease;
         }
 
@@ -101,7 +115,6 @@
             border: 3px solid rgb(11, 42, 83);
             border-radius: 10px;
             box-shadow: 0 0 5px rgba(11, 42, 83, 0.5);
-            text-decoration: none;
         }
 
         .calendar-container h2 {
@@ -114,10 +127,6 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             width: 100%;
-        }
-
-        a {
-            text-decoration: none;
         }
 
         .day-header {
@@ -158,7 +167,7 @@
 
         .event-item {
             background-color: rgb(204, 80, 0);
-            color: #ffffff;
+            color: #ffffff !important;
             font-weight: 600;
             border-radius: 3px;
             word-break: break-word;
@@ -189,7 +198,6 @@
             align-items: center;
             justify-content: flex-end;
             aspect-ratio: 1 / 1;
-            text-decoration: none;
             border: 3px solid rgb(11, 42, 83);
             border-radius: 10px;
             overflow: hidden;
@@ -584,18 +592,6 @@
 </head>
 <body>
     <main>
-        <div class="top">
-            <div class="text">
-                <h1>Discover What’s Happening in Kemah</h1>
-
-                <p>
-                    Stay connected with everything happening around the City of Kemah. 
-                    From community gatherings and local celebrations to family-friendly activities and seasonal events, there’s always something to enjoy. 
-                    Explore upcoming events, make plans with friends and family, and be part of the Kemah community.
-                </p>
-            </div>
-        </div>
-
         <div class="bottom">
             <div class="Upcoming">
             <h2>Upcoming Events!</h2>
