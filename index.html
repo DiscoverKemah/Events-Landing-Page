@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="images/Discover Kemah Logo.png Kemah Logo.png">
+    <link rel="icon" type="image/png" href="images/Discover Kemah Logo.png">
     <title>Discover Kemah Events</title>
     <style>
         /* ==========================================
-           1. BASE STYLES (Shared across all screens)
-           ========================================== */
+            1. BASE STYLES (Shared across all screens)
+            ========================================== */
 
         * {
             box-sizing: border-box;
@@ -19,7 +19,7 @@
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-image: url('images/background1.jpeg'); 
-            background-size: cover;                                 
+            background-size: cover;                                     
             background-position: center;                     
             background-repeat: no-repeat;                    
             background-attachment: fixed;                    
@@ -43,7 +43,7 @@
             border-style: solid;
             border-radius: 5px;
             margin: 10px;
-            background-color: rgba(255, 255, 255, 0.85); /* Added slight background so text stays readable over bg image */
+            background-color: rgba(255, 255, 255, 0.85);
         }
 
         .button {
@@ -66,11 +66,6 @@
             color: white;
             filter: drop-shadow(0 0 6px rgba(11, 42, 83, 0.5));
             box-shadow: 0 0 20px 2px rgb(246, 212, 76);
-        }
-
-        .logo img {
-            height: auto;
-            transition: transform 0.4s ease, filter 0.4s ease;
         }
 
         .Upcoming {
@@ -106,6 +101,7 @@
             border: 3px solid rgb(11, 42, 83);
             border-radius: 10px;
             box-shadow: 0 0 5px rgba(11, 42, 83, 0.5);
+            text-decoration: none;
         }
 
         .calendar-container h2 {
@@ -234,7 +230,6 @@
             transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
         }
 
-        /* Card & Title Hover Animations */
         .card:hover {
             transform: translateY(-6px) scale(1.02);
             box-shadow: 0 0 20px 2px rgb(246, 212, 76);
@@ -254,8 +249,8 @@
 
 
         /* ==========================================
-           2. PHONE MEDIA QUERY (Up to 767px)
-           ========================================== */
+            2. PHONE MEDIA QUERY (Up to 767px)
+            ========================================== */
         @media screen and (max-width: 767px) {
             main {
                 padding: 10px 5px;
@@ -264,15 +259,8 @@
 
             .top {
                 display: flex;
-                flex-direction: column-reverse;
+                flex-direction: column;
                 align-items: center;
-                gap: 1.2rem;
-            }
-
-            .logo img {
-                width: 100%;
-                max-width: 240px;
-                margin-top: 10px;
             }
 
             .text {
@@ -377,8 +365,8 @@
 
 
         /* ==========================================
-           3. TABLET MEDIA QUERY (768px to 1023px)
-           ========================================== */
+            3. TABLET MEDIA QUERY (768px to 1023px)
+            ========================================== */
         @media screen and (min-width: 768px) and (max-width: 1023px) {
             main {
                 padding: 20px;
@@ -390,14 +378,13 @@
             .top {
                 display: flex;
                 flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                gap: 2rem;
+                justify-content: center;
             }
 
             .text {
-                flex: 1 1 60%;
-                text-align: left;
+                width: 100%;
+                max-width: 800px;
+                text-align: center;
             }
 
             .text h1 {
@@ -416,16 +403,6 @@
                 padding: 10px 30px;
                 font-size: 20px;
                 margin-top: 20px;
-                margin-right: 10px;
-            }
-
-            .logo {
-                flex: 1 1 40%;
-            }
-
-            .logo img {
-                width: 100%;
-                max-width: 320px;
             }
 
             .feature-cards {
@@ -496,8 +473,8 @@
 
 
         /* ==========================================
-           4. BIG DESKTOP MEDIA QUERY (1024px and up)
-           ========================================== */
+            4. BIG DESKTOP MEDIA QUERY (1024px and up)
+            ========================================== */
         @media screen and (min-width: 1024px) {
             main {
                 padding: 20px 30px;
@@ -509,16 +486,15 @@
             .top {
                 display: flex;
                 flex-direction: row;
-                align-items: center;
                 justify-content: center;
-                gap: 4rem;
                 max-width: 1500px;
+                margin: 0 auto;
             }
 
             .text {
-                flex: 1 1 50%;
+                width: 100%;
                 text-align: center;
-                max-width: 650px;
+                max-width: 900px;
                 padding: 10px 0;
             }
 
@@ -537,13 +513,6 @@
                 padding: 10px 45px;
                 font-size: 26px;
                 margin-top: 35px;
-                margin-right: 20px;
-            }
-
-            .logo img {
-                width: 100%;
-                max-width: 500px;
-                margin-top: 20px;
             }
 
             .feature-cards {
@@ -624,13 +593,6 @@
                     From community gatherings and local celebrations to family-friendly activities and seasonal events, there’s always something to enjoy. 
                     Explore upcoming events, make plans with friends and family, and be part of the Kemah community.
                 </p>
-
-                <a href="https://www.kemahtx.gov/630/Events-Festivals-and-More" target="_blank" class="button">Events</a>
-            </div>
-            <div class="logo">
-                <a href="https://discoverkemah.com/" target="_blank">
-                    <img src="images/kemah logo remove.png" alt="logo">
-                </a>    
             </div>
         </div>
 
@@ -791,31 +753,6 @@
                 <div class="day-box empty-box"><span class="day-number">3</span></div>
                 <div class="day-box empty-box"><span class="day-number">4</span></div>
                 <div class="day-box empty-box"><span class="day-number">5</span></div>
-            </div>
-        </div>
-
-        <!-- Feature Cards Section -->
-        <div class="feature-section">
-            <h2 class="section-title">Explore Kemah!</h2>
-            <div class="feature-cards">
-                <a href="https://discoverkemah.com/BusinessDirectoryII.aspx?lngBusinessCategoryID=86" target="_blank" class="card">
-                    <div class="card-image-wrapper">
-                        <img src="images/walkinn.jpg" alt="Stay">
-                    </div>
-                    <div class="card-title">STAY</div>
-                </a>
-                <a href="https://discoverkemah.com/BusinessDirectoryII.aspx?lngBusinessCategoryID=86" target="_blank" class="card">
-                    <div class="card-image-wrapper">
-                        <img src="images/food.jpg" alt="Food">
-                    </div>
-                    <div class="card-title">DINING</div>
-                </a>
-                <a href="https://discoverkemah.com/BusinessDirectoryII.aspx?lngBusinessCategoryID=86" target="_blank" class="card">
-                    <div class="card-image-wrapper">
-                        <img src="images/57acre.jpg" alt="Outdoors">
-                    </div>
-                    <div class="card-title">OUTDOORS</div>
-                </a>
             </div>
         </div>
     </main>
